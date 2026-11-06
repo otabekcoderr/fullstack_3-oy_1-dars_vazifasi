@@ -80,3 +80,4 @@ export const users = [
     balance: 1200,
   },
 ];
+

@@ -10,6 +10,7 @@ import { users } from "./users.js";
 //   let balance_right = false;
 //   let { firstName, lastName, age, email, role, balance } = user;
 
+//   // Ism va familiya tekshiruvchi agent001
 //   if (firstName.trim() && lastName.trim()) {
 //     last_firstName = true;
 //   } else {
@@ -18,7 +19,12 @@ import { users } from "./users.js";
 //   if (age >= 18) {
 //     age_right = true;
 //   } else {
-//     return "Yoshingiz yetarli emas";
+//     ("Yoshingiz yetarli emas");
+//   }
+
+//   //email tekshiruvchi agent002
+//   if (users.some((item) => item.email === email)) {
+//     return "Bunday email oldin foydalanilgan";
 //   }
 //   if (email.includes("@") && email.endsWith(".com")) {
 //     email_right = true;
@@ -26,26 +32,39 @@ import { users } from "./users.js";
 //     return "Emailda '@' bo'lishi va '.com' bilan tugashi kerak";
 //   }
 
-//   if (role == "admin" || role == "moderator" || role == "user") {
+//   //role tekshiruvchi agent003
+//   if (
+//     (role != undefined && role == "admin") ||
+//     role == "moderator" ||
+//     role == "user"
+//   ) {
 //     role_right = true;
 //   } else {
 //     return "Tasdiqlanmagan maqom";
 //   }
+
+//   //balans tekshiruvchi agent004
 //   if (balance >= 0) {
 //     balance_right = true;
 //   } else {
-//     return "balans manfiy bo'lmasiligi kerak";
+//     ("balans manfiy bo'lmasiligi kerak");
 //   }
 
-//   if (!user.isActive) {
-//     user.isActive = true;
-//   }
+//   //faollik
+//   if (!user.isActive) user.isActive = true;
 
-//   if ((last_firstName, age_right, email_right, balance_right, role_right)) {
-//     user.id = users.length === 0 ? 1 : users.at(-1).id + 1;
+//   //tasdiqlovchi agent005
+//   if (
+//     last_firstName &&
+//     age_right &&
+//     email_right &&
+//     balance_right &&
+//     role_right
+//   ) {
+//     let newId = users.reduce((max, item) => (item.id > max ? item.id : max), 0);
+//     user.id = newId + 1;
 //     users.push(user);
 //     return "Muvaffaqiyatli qo'shildi";
-//     return users;
 //   } else {
 //     return "Tasdiqlanmadi";
 //   }
@@ -53,14 +72,16 @@ import { users } from "./users.js";
 
 // console.log(
 //   createUser({
-//     firstName: "Bobur",
-//     lastName: "Hasanov",
-//     age: 25,
-//     email: "bobur@gmail.com",
-//     role: "user",
-//     balance: 0,
+//     firstName: "Dilshod",
+//     lastName: "Akbarov",
+//     age: 20,
+//     email: "dilshod@gmail.com",
+//     role: "moderator",
+//     balance: 12000,
 //   }),
 // );
+
+// console.log(users);
 
 //========================================================================================
 
@@ -73,7 +94,7 @@ import { users } from "./users.js";
 // Name: ${i.firstName} ${i.lastName}
 // Email: ${i.email}
 // Role: ${i.role}
-// Status: ${i.isActive}
+// Status: ${i.isActive?"Active":"Inactive"}
 // Balance: $${i.balance}
 // ----------------------`);
 //   }
@@ -114,43 +135,80 @@ import { users } from "./users.js";
 
 //5-masala
 
-function updateUser(id, updateData) {
-  let find_id = users.find((item) => item.id == id);
-  if (!find_id) {
-    return "User not found";
-  }
+// function updateUser(id, updateData) {
+//   let find_id = users.find((item) => item.id == id);
+//   if (!find_id) {
+//     return "User not found";
+//   }
 
-  let { age, email, role, balance } = updateData;
+//   let { age, email, role, balance } = updateData;
+//   let togrimi = true;
 
-  let togrimi = true;
-  if (age < 18) {
-    togrimi = false;
-    return "Yoshingiz yetarli emas";
-  }
-  if (balance < 0) {
-    togrimi = false;
-    return "Balans manfiy bo'lmasin";
-  }
+//   //id tekshiruvchi
+//   if (updateData.id !== undefined) {
+//     togrimi = false;
+//     return "Idni o'zgartirish mumkin emas";
+//   }
 
-  if (updateData.role != undefined && updateData.role != "user") {
-    togrimi = false;
-    console.log(role);
+//   // Yosh tekshiruvchi
+//   if (age != undefined && age < 18) {
+//     togrimi = false;
+//     return "Yoshingiz yetarli emas";
+//   }
+//   if (balance != undefined && balance < 0) {
+//     togrimi = false;
+//     return "Balans manfiy bo'lmasin";
+//   }
 
-    return "Bunday role tasdiqlanmagan";
-  }
-  if (users.email == email) {
-    return "email mavjud";
-  }
-  if (togrimi == true) {
-    Object.assign(find_id, updateData);
-    return users;
-  }
-}
+//   //role tekshiruvchi
+//   if (
+//     (role != undefined && role == "user") ||
+//     role == "admin" ||
+//     role == "moderator"
+//   ) {
+//   } else {
+//     return "Bunday role tasdiqlanmagan";
+//   }
 
-console.log(
-  updateUser(2, {
-    age: 22,
-    balance: 800,
-    email: "bobur@gmail.com",
-  }),
-);
+//   //email tekshiruvchi
+//   if (email != undefined) {
+//     for (let i of users) {
+//       if (i.id !== id && i.email == email) {
+//         return "Bu email oldin foydalanilgan";
+//       }
+//     }
+//   }
+
+//   //tasdiqlovchi
+//   if (togrimi == true) {
+//     Object.assign(find_id, updateData);
+//     return users;
+//   }
+// }
+
+// console.log(
+//   updateUser(1, {
+//     role: "admin",
+//   }),
+// );
+
+// =======================================================
+
+//Delete
+
+// //6-masala
+
+// function deleteUser(id) {
+//   let index = users.findIndex((item) => item.id == id);
+
+//   if (index === -1) {
+//     return "User not found";
+//   } else if (users[index].role == "admin") {
+//     return "Adminni o'chirish mumkin emas";
+//   }
+
+//   users.splice(index, 1);
+//   return users;
+// }
+
+// console.log(deleteUser(2));
